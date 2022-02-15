@@ -1,0 +1,13 @@
+使用构造函数    
+StudentWrapper(const string &id, const Student &student){
+    this->id=id;
+    this->student=student;
+    }
+程序编译时报错：constructor for 'StudentWapper' must explicitlyinitialize the reference member 'student'
+因为引用必须引用某个对象，因此不能被默认构造。
+在构造函数体中之后，所有数据成员都已初始化。
+实际上this->student=student进行的是一个赋值，将引用的student值赋给this->student,但此时它还未被构造，因此会报错；
+将赋值语句写入初始化列表即可解决此问题。如：
+StudentWrapper(const string &id, const Student &student) :student(student),id(id){
+}
+此时会在构造student完成后再进行相应的赋值。
